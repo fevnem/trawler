@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { SiteIndex } from "@/components/site-index";
 import type { Site } from "@/lib/api";
 
@@ -8,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 async function loadSites(): Promise<Site[]> {
   try {
-    const response = await fetch(`${ORIGIN}/api/sites`, { next: { revalidate: 3600 } });
+    const response = await fetch(`${ORIGIN}/api/sites`, { cache: "no-store" });
     if (!response.ok) return [];
     const payload = (await response.json()) as { sites?: Site[] };
     return payload.sites ?? [];
@@ -17,20 +16,11 @@ async function loadSites(): Promise<Site[]> {
   }
 }
 
-export default async function SitesPage() {
+export default async function SupportedSitesPage() {
   const sites = await loadSites();
 
   return (
-    <main className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
-      <header className="flex h-16 items-center justify-between border-b border-rule">
-        <Link href="/" className="wordmark text-xl">
-          trawler
-        </Link>
-        <Link href="/" className="text-sm text-muted transition-colors hover:text-ink">
-          Back to the field
-        </Link>
-      </header>
-
+    <div>
       <h1 className="display mt-12 max-w-[18ch] text-[clamp(2rem,4vw,3.2rem)]">
         Everything the reader knows.
       </h1>
@@ -40,6 +30,6 @@ export default async function SitesPage() {
       </p>
 
       <SiteIndex sites={sites} />
-    </main>
+    </div>
   );
 }

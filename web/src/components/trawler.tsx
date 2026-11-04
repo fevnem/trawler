@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { duration, probe, type Playlist, type Probe, type Site } from "@/lib/api";
 import { Omni } from "./omni";
 import { Result } from "./result";
@@ -35,6 +35,16 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
   }
 
   const filled = Boolean(data);
+
+  useEffect(() => {
+    const reset = () => {
+      setUrl("");
+      setData(null);
+      setError(null);
+    };
+    window.addEventListener("trawler:reset", reset);
+    return () => window.removeEventListener("trawler:reset", reset);
+  }, []);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -117,7 +127,7 @@ function Board({ sites, total }: { sites: Site[]; total: number }) {
           </div>
         ))}
         <Link
-          href="/sites"
+          href="/supported-sites"
           className="num mt-2 block border-t border-rule pt-2 text-[11px] text-signal"
         >
           +{Math.max(total - sites.length, 0).toLocaleString("en-US")} more
