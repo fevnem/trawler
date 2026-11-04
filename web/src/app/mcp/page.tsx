@@ -14,8 +14,7 @@ const CONFIG = `{
   "mcpServers": {
     "trawler": {
       "type": "http",
-      "url": "${ENDPOINT}",
-      "headers": { "Authorization": "Bearer <token>" }
+      "url": "${ENDPOINT}"
     }
   }
 }`;
@@ -43,7 +42,7 @@ export default function McpPage() {
         </div>
         <div className="flex flex-col gap-1 border-b border-rule py-4 sm:flex-row sm:items-baseline sm:gap-8">
           <p className="w-40 shrink-0 text-sm">Auth</p>
-          <p className="num text-xs text-muted">Authorization: Bearer &lt;token&gt;</p>
+          <p className="text-xs text-muted">None. Public site, public endpoint.</p>
         </div>
         <div className="flex flex-col gap-1 border-b border-rule py-4 sm:flex-row sm:items-baseline sm:gap-8">
           <p className="w-40 shrink-0 text-sm">Links expire</p>
@@ -73,8 +72,7 @@ export default function McpPage() {
         {CONFIG}
       </pre>
       <pre className="num mt-3 overflow-x-auto border border-rule bg-card p-4 text-[11px] leading-relaxed text-muted">
-        {`claude mcp add --transport http trawler ${ENDPOINT} \\
-  --header "Authorization: Bearer $TRAWLER_MCP_TOKEN"`}
+        {`claude mcp add --transport http trawler ${ENDPOINT}`}
       </pre>
 
       <p className="mt-8 max-w-[58ch] text-xs leading-relaxed text-muted">

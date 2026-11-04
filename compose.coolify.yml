@@ -19,7 +19,6 @@ services:
       TRAWLER_SECRET: ${TRAWLER_SECRET:?set a long random string}
       TRAWLER_PUBLIC_ORIGIN: ${TRAWLER_PUBLIC_ORIGIN:?set the public origin}
       TRAWLER_CORS_ORIGINS: ${TRAWLER_PUBLIC_ORIGIN}
-      TRAWLER_MCP_TOKEN: ${TRAWLER_MCP_TOKEN:?set an mcp bearer token}
       TRAWLER_MAX_DOWNLOADS: "4"
       TRAWLER_MAX_PROBES: "8"
       TRAWLER_TOKEN_TTL: "3600"

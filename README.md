@@ -45,7 +45,7 @@ the defaults here are 8010 and 3100.
 ## MCP
 
 The same reader is available to agents at `https://<host>/api/mcp`, mounted on the API and reached
-through the existing `/api` rewrite. Send `Authorization: Bearer $TRAWLER_MCP_TOKEN`.
+through the existing `/api` rewrite. No key: the site is public, so the endpoint is too.
 
 | Tool | Returns |
 | --- | --- |
@@ -57,7 +57,7 @@ through the existing `/api` rewrite. Send `Authorization: Bearer $TRAWLER_MCP_TO
 | `gif_link` | signed URL for a GIF range |
 | `subtitle_link` | signed URL for a caption track |
 
-Tools return links, never bytes. Set `TRAWLER_MCP_TOKEN` to empty to disable the mount entirely.
+Tools return links, never bytes. Abuse is a rate-limit problem at the edge, not an auth problem.
 
 ## Design constraints
 
@@ -83,8 +83,8 @@ Coolify, **Docker Compose** build pack, compose location `/compose.coolify.yml`.
 wrong pack here: it builds one service from source, and ffmpeg would depend on it guessing a system
 package.
 
-Set `TRAWLER_SECRET`, `TRAWLER_PUBLIC_ORIGIN` and `TRAWLER_MCP_TOKEN` in the service environment,
-then add two domains on the same hostname:
+Set `TRAWLER_SECRET` and `TRAWLER_PUBLIC_ORIGIN` in the service environment, then add two domains on
+the same hostname:
 
 | Domain | Service | Port | Path |
 | --- | --- | --- | --- |

@@ -208,36 +208,9 @@ async def subtitle_link(
     return {"lang": chosen["lang"], "ext": chosen["ext"], "url": _absolute(f"/api/sub/{chosen['token']}")}
 
 
-class BearerGuard:
-    """Rejects any request without the configured bearer token."""
-
-    def __init__(self, app, token: str):
-        self.app = app
-        self.token = token
-
-    async def __call__(self, scope, receive, send):
-        if scope["type"] != "http":
-            await self.app(scope, receive, send)
-            return
-        headers = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
-        if not self.token or headers.get("authorization") != f"Bearer {self.token}":
-            await send(
-                {
-                    "type": "http.response.start",
-                    "status": 401,
-                    "headers": [(b"content-type", b"application/json")],
-                }
-            )
-            await send({"type": "http.response.body", "body": b'{"error":"unauthorized"}'})
-            return
-        await self.app(scope, receive, send)
-
-
 def build_app(path: str = "/mcp"):
-    """Return the ASGI app to mount, or None when MCP is not configured."""
+    """Return the ASGI app to mount."""
     global _MANAGER
-    if not settings.mcp_token:
-        return None
     app = server.streamable_http_app(
         streamable_http_path=path,
         json_response=True,
@@ -247,7 +220,7 @@ def build_app(path: str = "/mcp"):
     # The session manager only exists once the transport app is built, and its
     # task group has to be started from the host app's lifespan.
     _MANAGER = server.session_manager
-    return BearerGuard(app, settings.mcp_token)
+    return app
 
 
 @asynccontextmanager

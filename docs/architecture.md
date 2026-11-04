@@ -79,8 +79,8 @@ Three details worth knowing before changing it:
 - **Lifespan.** `StreamableHTTPSessionManager` only exists after `streamable_http_app()` is called,
   and its task group must be started from the host app's lifespan. `mcp_lifespan()` does that;
   dropping it produces "Task group is not initialized" on the first request.
-- **Auth.** `BearerGuard` wraps the mount and rejects anything without `TRAWLER_MCP_TOKEN`. When the
-  token is empty the mount is not created at all, so there is no unauthenticated path.
+- **Auth.** None, on purpose. This is a public site with no accounts, so there is nowhere to issue a
+  key and no reason to invent one. If abuse becomes real, limit it at the proxy, not in here.
 
 Tools never move bytes. `probe` and the link tools mint tickets through `core.tickets` and return
 absolute URLs built from `TRAWLER_PUBLIC_ORIGIN`; the client fetches those over plain HTTP.
