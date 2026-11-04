@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 
 from .config import settings
+from .core.throttle import ThrottleMiddleware
 from .mcp_server import build_app as build_mcp_app
 from .mcp_server import mcp_lifespan
 from .routes import catalog, media, probe
@@ -37,6 +38,9 @@ app.add_middleware(
 app.include_router(catalog.router, prefix="/api", tags=["catalog"])
 app.include_router(probe.router, prefix="/api", tags=["probe"])
 app.include_router(media.router, prefix="/api", tags=["media"])
+
+# Added last so it runs first: the limiter must decide before any work starts.
+app.add_middleware(ThrottleMiddleware)
 
 # MCP rides the same /api rewrite the browser already uses. Mounting at /api with
 # the inner route at /mcp avoids the trailing-slash redirect a root mount would emit.

@@ -13,6 +13,11 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:3000"
     public_origin: str = "http://localhost:3000"
     cookies_file: str = ""
+    rate_probe: int = 12
+    rate_media: int = 20
+    rate_preview: int = 240
+    rate_read: int = 120
+    rate_mcp: int = 60
     user_agent: str = (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

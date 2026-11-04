@@ -85,6 +85,23 @@ Three details worth knowing before changing it:
 Tools never move bytes. `probe` and the link tools mint tickets through `core.tickets` and return
 absolute URLs built from `TRAWLER_PUBLIC_ORIGIN`; the client fetches those over plain HTTP.
 
+## Throttling
+
+`core/throttle.py` is an ASGI middleware, added last so it runs before any route work. It is not
+DDoS protection — Cloudflare absorbs volume before it reaches the origin. It exists for the case
+that actually happens: one address looping probes or downloads until the pipe slots are gone.
+
+- **Per address, per class.** `probe` 12/min, `media` 20/min, `preview` 240/min (a `<video>` element
+  fires a burst of range requests), `mcp` 60/min, everything else 120/min. All tunable by env.
+- **Escalating cooldowns.** A breach blocks for 60 s; a second breach inside an hour blocks for
+  300 s, then 1800, then 7200. The window resets on each block, so a client that waits is forgiven.
+- **Private addresses are exempt.** Server-side renders reach `/api/health` from the web container on
+  the Compose network. Throttling that would lock the site out of its own API.
+- **Address source.** `CF-Connecting-IP`, then `X-Real-IP`, then the first `X-Forwarded-For` hop.
+  The API is only reachable through the proxy chain, so these are the honest values.
+- **Memory.** A dict of deques, capped at 20 000 clients, evicting the least recently seen tenth.
+  Single worker, so no shared store is needed; adding workers would require one.
+
 ## Deliberate omissions
 
 - No auth, no accounts, no history.

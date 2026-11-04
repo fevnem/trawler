@@ -154,6 +154,9 @@ docker compose -f compose.coolify.yml up --build
 | `TRAWLER_MAX_DOWNLOADS` | concurrent ffmpeg pipes, default 4 |
 | `TRAWLER_MAX_PROBES` | concurrent yt-dlp probes, default 8 |
 | `TRAWLER_COOKIES_FILE` | optional Netscape `cookies.txt` for sources that need a session |
+| `TRAWLER_RATE_PROBE` | probes per minute per address, default 12 |
+| `TRAWLER_RATE_MEDIA` | downloads and GIFs per minute per address, default 20 |
+| `TRAWLER_RATE_PREVIEW` | player range requests per minute per address, default 240 |
 
 Local development runs the two halves separately:
 
@@ -180,6 +183,10 @@ the defaults here are 8010 and 3100.
   instead and the download still works, because ffmpeg reads the playlist directly.
 - **No auth, no accounts, no history.** That is the product, not a gap. Abuse is a rate-limit
   problem at the proxy.
+- **Rate limits are per address, not per account.** One address gets 12 probes and 20 downloads a
+  minute by default; repeat offenders get 1 minute, then 5, then 30, then 2 hours. Private
+  addresses on the Compose network are never limited, because the web container's own renders
+  would otherwise lock the site out.
 
 ## Layout
 
