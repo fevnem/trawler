@@ -12,7 +12,8 @@ RUN pip install --no-cache-dir \
     "uvicorn[standard]>=0.30" \
     "yt-dlp>=2026.1.1" \
     "httpx>=0.28" \
-    "pydantic-settings>=2.4"
+    "pydantic-settings>=2.4" \
+    "mcp>=2.3"
 
 COPY src ./src
 
