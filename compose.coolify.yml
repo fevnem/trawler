@@ -1,0 +1,38 @@
+services:
+  api:
+    build: ./api
+    restart: unless-stopped
+    environment:
+      TAWLER_SECRET: ${TAWLER_SECRET:?set a long random string}
+      TAWLER_CORS_ORIGINS: ${TAWLER_PUBLIC_ORIGIN}
+      TAWLER_MAX_DOWNLOADS: "4"
+      TAWLER_MAX_PROBES: "8"
+      TAWLER_TOKEN_TTL: "3600"
+      TAWLER_COOKIES_FILE: ${TAWLER_COOKIES_FILE:-}
+    expose:
+      - "8000"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tawler-api.rule=Host(`${TAWLER_HOST}`) && PathPrefix(`/api`)
+      - traefik.http.routers.tawler-api.priority=20
+      - traefik.http.routers.tawler-api.entrypoints=https
+      - traefik.http.routers.tawler-api.tls.certresolver=letsencrypt
+      - traefik.http.services.tawler-api.loadbalancer.server.port=8000
+
+  web:
+    build:
+      context: ./web
+      args:
+        API_ORIGIN: http://api:8000
+    restart: unless-stopped
+    environment:
+      API_ORIGIN: http://api:8000
+    expose:
+      - "3000"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.tawler-web.rule=Host(`${TAWLER_HOST}`)
+      - traefik.http.routers.tawler-web.priority=10
+      - traefik.http.routers.tawler-web.entrypoints=https
+      - traefik.http.routers.tawler-web.tls.certresolver=letsencrypt
+      - traefik.http.services.tawler-web.loadbalancer.server.port=3000
