@@ -2,11 +2,12 @@
 #
 # Build pack: Docker Compose. Compose location: /compose.coolify.yml
 #
-# Domains are configured in the Coolify UI, not here. Add two entries on the
-# same hostname so the proxy routes by path:
+# Domains are configured in the Coolify UI, not here. Add one entry:
 #
 #   https://<host>   -> service web, port 3000, path /
-#   https://<host>   -> service api, port 8000, path /api
+#
+# The web container proxies /api/* to the api service over the Compose network
+# (rewrite in web/next.config.ts), so the API needs no public route.
 #
 # Do not add Traefik labels to this file. Coolify writes its own on deploy and
 # duplicates make the router ambiguous.
