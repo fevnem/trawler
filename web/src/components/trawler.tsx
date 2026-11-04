@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { duration, probe, type Playlist, type Probe, type Site } from "@/lib/api";
+import { duration, probe, type Playlist, type Probe } from "@/lib/api";
 import { Omni } from "./omni";
 import { Result } from "./result";
 
@@ -12,7 +11,7 @@ const SAMPLES = [
   { label: "a direct file", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
 ];
 
-export function Trawler({ total, board }: { total: number; board: Site[] }) {
+export function Trawler({ total }: { total: number }) {
   const [url, setUrl] = useState("");
   const [data, setData] = useState<Probe | null>(null);
   const [busy, setBusy] = useState(false);
@@ -50,64 +49,56 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
     <div className="flex flex-1 flex-col">
       <section className={filled ? "pt-8" : "flex flex-1 flex-col pb-10 pt-10"}>
         <div className={filled ? "" : "flex flex-1 items-center"}>
-        <div
-          className={
-            filled ? "" : "flex w-full flex-col gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-24"
-          }
-        >
-        <div className={filled ? "" : "w-full max-w-[860px]"}>
-        {!filled ? (
-          <>
-            <h1 className="display max-w-[24ch] text-[clamp(2.2rem,3.4vw,3.5rem)]">
-              Paste a link.
-              <br />
-              Take the file.
-            </h1>
-            <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-muted">
-              Video, audio, GIF or a trimmed clip, pulled from{" "}
-              <span className="num text-ink">{total.toLocaleString("en-US")}</span> sites. Nothing is
-              kept on the server.
-            </p>
-          </>
-        ) : null}
+          <div className={filled ? "" : "w-full max-w-[860px]"}>
+            {!filled ? (
+              <>
+                <h1 className="display max-w-[24ch] text-[clamp(2.2rem,3.4vw,3.5rem)]">
+                  Paste a link.
+                  <br />
+                  Take the file.
+                </h1>
+                <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-muted">
+                  Video, audio, GIF or a trimmed clip, pulled from{" "}
+                  <span className="num text-ink">{total.toLocaleString("en-US")}</span> sites. Nothing
+                  is kept on the server.
+                </p>
+              </>
+            ) : null}
 
-        <div className={filled ? "" : "mt-8"}>
-          <Omni
-            value={url}
-            onChange={setUrl}
-            onSubmit={() => run()}
-            busy={busy}
-            compact={filled}
-          />
-        </div>
+            <div className={filled ? "" : "mt-8"}>
+              <Omni
+                value={url}
+                onChange={setUrl}
+                onSubmit={() => run()}
+                busy={busy}
+                compact={filled}
+              />
+            </div>
 
-        {!filled ? (
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="text-[11px] text-muted">Try</span>
-            {SAMPLES.map((sample) => (
-              <button
-                key={sample.url}
-                type="button"
-                onClick={() => run(sample.url)}
-                className="num border border-rule px-2.5 py-1 text-[11px] text-muted transition-colors hover:border-ink hover:text-ink"
-              >
-                {sample.label}
-              </button>
-            ))}
+            {!filled ? (
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <span className="text-[11px] text-muted">Try</span>
+                {SAMPLES.map((sample) => (
+                  <button
+                    key={sample.url}
+                    type="button"
+                    onClick={() => run(sample.url)}
+                    className="num border border-rule px-2.5 py-1 text-[11px] text-muted transition-colors hover:border-ink hover:text-ink"
+                  >
+                    {sample.label}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
+            {error ? (
+              <p role="alert" className="mt-3 border-l-2 border-signal pl-3 text-sm">
+                {error}
+              </p>
+            ) : null}
           </div>
-        ) : null}
-
-        {error ? (
-          <p role="alert" className="mt-3 border-l-2 border-signal pl-3 text-sm">
-            {error}
-          </p>
-        ) : null}
         </div>
 
-        </div>
-        </div>
-
-        {!filled && board.length ? <SiteBand sites={board} total={total} /> : null}
         {!filled ? <Capabilities /> : null}
       </section>
 
@@ -140,26 +131,6 @@ function Capabilities() {
           <p className="text-xs leading-relaxed text-muted sm:mt-1.5 sm:max-w-[34ch]">{item.body}</p>
         </div>
       ))}
-    </div>
-  );
-}
-
-function SiteBand({ sites, total }: { sites: Site[]; total: number }) {
-  return (
-    <div className="mt-10 grid grid-cols-2 border-t border-rule sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-      {sites.map((site) => (
-        <div
-          key={site.name}
-          className="flex items-baseline border-b border-rule py-2 pr-6 sm:pr-8"
-        >
-          <span className="truncate text-sm lowercase text-ink">{site.name}</span>
-        </div>
-      ))}
-      <div className="flex items-baseline border-b border-rule py-2">
-        <Link href="/supported-sites" className="text-sm text-signal">
-          +{Math.max(total - sites.length, 0).toLocaleString("en-US")} more
-        </Link>
-      </div>
     </div>
   );
 }

@@ -1,31 +1,21 @@
 import { Trawler } from "@/components/trawler";
-import type { Site } from "@/lib/api";
 
 const ORIGIN = process.env.API_ORIGIN ?? "http://127.0.0.1:8010";
-const FEATURED = ["youtube", "vimeo", "soundcloud", "bandcamp", "twitch", "tiktok", "dailymotion", "bilibili"];
 
 export const dynamic = "force-dynamic";
 
-async function load() {
+async function siteCount(): Promise<number> {
   try {
-    const [health, sites] = await Promise.all([
-      fetch(`${ORIGIN}/api/health`, { cache: "no-store" }),
-      fetch(`${ORIGIN}/api/sites`, { cache: "no-store" }),
-    ]);
-    const total = health.ok ? ((await health.json()) as { extractors?: number }).extractors ?? 0 : 0;
-    const all = sites.ok ? ((await sites.json()) as { sites?: Site[] }).sites ?? [] : [];
-    const picked = FEATURED.map((name) => all.find((site) => site.name.toLowerCase() === name)).filter(
-      (site): site is Site => Boolean(site),
-    );
-    const rest = all.filter((site) => !picked.some((p) => p.name === site.name));
-    const board = [...picked, ...rest].slice(0, 23);
-    return { total, board };
+    const response = await fetch(`${ORIGIN}/api/health`, { cache: "no-store" });
+    if (!response.ok) return 0;
+    const payload = (await response.json()) as { extractors?: number };
+    return payload.extractors ?? 0;
   } catch {
-    return { total: 0, board: [] as Site[] };
+    return 0;
   }
 }
 
 export default async function Page() {
-  const { total, board } = await load();
-  return <Trawler total={total} board={board} />;
+  const total = await siteCount();
+  return <Trawler total={total} />;
 }
