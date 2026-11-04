@@ -16,10 +16,10 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "tawler",
+  title: "trawler",
   description: "Paste a link, take the file. Video, audio, GIF and trimmed clips from 1,751 sites.",
   openGraph: {
-    title: "tawler",
+    title: "trawler",
     description: "Paste a link, take the file.",
     type: "website",
   },

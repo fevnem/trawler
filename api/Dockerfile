@@ -22,4 +22,4 @@ ENV PYTHONUNBUFFERED=1
 EXPOSE 8000
 
 # One worker on purpose: the concurrency limiters and ticket key live in process.
-CMD ["uvicorn", "tawler.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+CMD ["uvicorn", "trawler.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

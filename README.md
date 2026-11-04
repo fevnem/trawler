@@ -1,4 +1,4 @@
-# tawler
+# trawler
 
 Paste a link, take the file. Video, audio, GIF or a trimmed clip from every site the installed
 yt-dlp knows (1,751 extractors at build time). Nothing is written to disk and nothing is stored
@@ -16,7 +16,7 @@ after a request ends.
 cd api
 uv venv --python 3.12 .venv
 uv pip install --python .venv/bin/python fastapi "uvicorn[standard]" yt-dlp httpx pydantic-settings
-PYTHONPATH=src .venv/bin/python -m uvicorn tawler.main:app --port 8010
+PYTHONPATH=src .venv/bin/python -m uvicorn trawler.main:app --port 8010
 
 # web
 cd web
@@ -48,7 +48,7 @@ carry the resolved media URL, headers and filename. Downloads are either a strai
 an ffmpeg pipe into the response body.
 
 **One worker.** Concurrency limits and the fallback ticket key live in process. Scale by raising
-`TAWLER_MAX_DOWNLOADS`, not by adding workers, unless you set `TAWLER_SECRET` and move the limiter
+`TRAWLER_MAX_DOWNLOADS`, not by adding workers, unless you set `TRAWLER_SECRET` and move the limiter
 to a shared store.
 
 **HLS sources.** A preview only uses progressive (`http`/`https`) formats, because browsers cannot
@@ -56,7 +56,7 @@ play `m3u8` natively. HLS-only items show cover art instead of a player and stil
 since ffmpeg reads the playlist directly.
 
 **YouTube.** Datacenter IPs get "Sign in to confirm you're not a bot" on every player client. Set
-`TAWLER_COOKIES_FILE` to a Netscape `cookies.txt` from an account that can watch the content. This
+`TRAWLER_COOKIES_FILE` to a Netscape `cookies.txt` from an account that can watch the content. This
 is a yt-dlp and IP reputation matter, not a bug in this code.
 
 ## Deploy
@@ -65,7 +65,7 @@ Coolify, **Docker Compose** build pack, compose location `/compose.coolify.yml`.
 wrong pack here: it builds one service from source, and ffmpeg would depend on it guessing a system
 package.
 
-Set `TAWLER_SECRET` and `TAWLER_PUBLIC_ORIGIN` in the service environment, then add two domains on
+Set `TRAWLER_SECRET` and `TRAWLER_PUBLIC_ORIGIN` in the service environment, then add two domains on
 the same hostname:
 
 | Domain | Service | Port | Path |
@@ -76,15 +76,6 @@ the same hostname:
 Both containers share the Compose network, so the web app reaches the API at `http://api:8000`. Do
 not add Traefik labels to the compose file: Coolify generates them from the domain table, and
 duplicates make the router ambiguous.
-
-### Mounted under a path
-
-If the app is served from a path rather than a hostname (`https://host/tawler`), set
-`NEXT_PUBLIC_BASE_PATH=/tawler` **before building**. It is compiled into the client bundle, so
-changing it requires a redeploy, not a restart. Assets and the `/api` proxy both follow the prefix
-because the proxy is an app route (`web/src/app/api/[...path]/route.ts`), not a rewrite: Next 16
-prefixes rewrite sources with `basePath` but matches them after stripping it, so rewrites 404 under
-a subpath.
 
 ## Legal
 

@@ -16,12 +16,12 @@ services:
     build: ./api
     restart: unless-stopped
     environment:
-      TAWLER_SECRET: ${TAWLER_SECRET:?set a long random string}
-      TAWLER_CORS_ORIGINS: ${TAWLER_PUBLIC_ORIGIN}
-      TAWLER_MAX_DOWNLOADS: "4"
-      TAWLER_MAX_PROBES: "8"
-      TAWLER_TOKEN_TTL: "3600"
-      TAWLER_COOKIES_FILE: ${TAWLER_COOKIES_FILE:-}
+      TRAWLER_SECRET: ${TRAWLER_SECRET:?set a long random string}
+      TRAWLER_CORS_ORIGINS: ${TRAWLER_PUBLIC_ORIGIN}
+      TRAWLER_MAX_DOWNLOADS: "4"
+      TRAWLER_MAX_PROBES: "8"
+      TRAWLER_TOKEN_TTL: "3600"
+      TRAWLER_COOKIES_FILE: ${TRAWLER_COOKIES_FILE:-}
     expose:
       - "8000"
 
@@ -30,7 +30,6 @@ services:
       context: ./web
       args:
         API_ORIGIN: http://api:8000
-        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
     restart: unless-stopped
     environment:
       API_ORIGIN: http://api:8000

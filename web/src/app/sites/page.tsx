@@ -22,7 +22,7 @@ export default async function SitesPage() {
     <main className="mx-auto w-full max-w-[1400px] px-5 sm:px-8">
       <header className="flex h-16 items-center justify-between border-b border-rule">
         <Link href="/" className="wordmark text-xl">
-          tawler
+          trawler
         </Link>
         <Link href="/" className="text-sm text-muted transition-colors hover:text-ink">
           Back to the field

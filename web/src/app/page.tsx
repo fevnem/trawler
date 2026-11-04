@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Tawler } from "@/components/tawler";
+import { Trawler } from "@/components/trawler";
 import type { Site } from "@/lib/api";
 
 const ORIGIN = process.env.API_ORIGIN ?? "http://127.0.0.1:8010";
@@ -30,7 +30,7 @@ export default async function Page() {
     <main className="mx-auto flex min-h-[100dvh] w-full max-w-[1400px] flex-col px-5 sm:px-8">
       <header className="flex h-16 shrink-0 items-center justify-between border-b border-rule">
         <Link href="/" className="wordmark text-xl">
-          tawler<span className="text-signal">.</span>
+          trawler<span className="text-signal">.</span>
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <Link href="/sites" className="text-muted transition-colors hover:text-ink">
@@ -39,12 +39,12 @@ export default async function Page() {
         </nav>
       </header>
 
-      <Tawler total={total} board={board} />
+      <Trawler total={total} board={board} />
 
       <footer className="mt-auto flex flex-wrap items-baseline justify-between gap-4 border-t border-rule py-6">
         <p className="text-xs text-muted">Use it for content you have the right to keep.</p>
         <p className="num text-xs text-muted">
-          tawler<span className="text-signal">.</span>
+          trawler<span className="text-signal">.</span>
         </p>
       </footer>
     </main>

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowDown } from "@phosphor-icons/react";
-import { apiPath, bytes, codec, quality, type Fmt } from "@/lib/api";
+import { bytes, codec, quality, type Fmt } from "@/lib/api";
 
 type Props = { formats: Fmt[]; empty: string };
 
@@ -39,7 +39,7 @@ export function FormatTable({ formats, empty }: Props) {
           </span>
 
           <a
-            href={apiPath(`/api/dl/${format.token}`)}
+            href={`/api/dl/${format.token}`}
             aria-label={`Download ${quality(format)} ${format.ext.toUpperCase()}`}
             className="row-link inline-flex items-center justify-end gap-1 justify-self-end text-sm"
           >

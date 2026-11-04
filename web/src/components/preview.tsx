@@ -1,10 +1,10 @@
 "use client";
 
 import { MusicNotes, PlayCircle } from "@phosphor-icons/react";
-import { apiPath, type Media } from "@/lib/api";
+import type { Media } from "@/lib/api";
 
 export function Preview({ media }: { media: Media }) {
-  const cover = media.thumbnail ? apiPath(`/api/thumb/${media.thumbnail}`) : null;
+  const cover = media.thumbnail ? `/api/thumb/${media.thumbnail}` : null;
 
   if (!media.preview) {
     if (cover) {
@@ -23,7 +23,7 @@ export function Preview({ media }: { media: Media }) {
     );
   }
 
-  const src = apiPath(`/api/preview/${media.preview.token}`);
+  const src = `/api/preview/${media.preview.token}`;
   const isVideo = media.preview.video !== false;
 
   if (isVideo) {

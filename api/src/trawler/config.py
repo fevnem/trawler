@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="TAWLER_", env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_prefix="TRAWLER_", env_file=".env", extra="ignore")
 
     secret: str = ""
     token_ttl: int = 3600

@@ -1,13 +1,14 @@
 import type { NextConfig } from "next";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const origin = process.env.API_ORIGIN ?? "http://127.0.0.1:8010";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   output: "standalone",
-  basePath,
-  assetPrefix: basePath || undefined,
+  async rewrites() {
+    return [{ source: "/api/:path*", destination: `${origin}/api/:path*` }];
+  },
 };
 
 export default nextConfig;

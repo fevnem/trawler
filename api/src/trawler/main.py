@@ -7,7 +7,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from .config import settings
 from .routes import catalog, media, probe
 
-app = FastAPI(title="tawler api", docs_url="/api/docs", openapi_url="/api/openapi.json")
+app = FastAPI(title="trawler api", docs_url="/api/docs", openapi_url="/api/openapi.json")
 
 app.add_middleware(GZipMiddleware, minimum_size=2048)
 app.add_middleware(

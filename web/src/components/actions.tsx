@@ -2,7 +2,7 @@
 
 import { ArrowDown, FileText, FilmStrip, ImageSquare, MusicNotes, Scissors } from "@phosphor-icons/react";
 import { useState } from "react";
-import { apiPath, bytes, type Media } from "@/lib/api";
+import { bytes, type Media } from "@/lib/api";
 import { FormatTable } from "./format-table";
 import { TimePanel } from "./time-panel";
 
@@ -67,7 +67,7 @@ export function Actions({ media }: { media: Media }) {
                 </div>
               </div>
               {bestAudio ? (
-                <a href={apiPath(`/api/dl/${bestAudio.token}?to=${target}`)} className="btn-quiet ml-auto">
+                <a href={`/api/dl/${bestAudio.token}?to=${target}`} className="btn-quiet ml-auto">
                   Convert and save
                 </a>
               ) : null}
@@ -97,7 +97,7 @@ export function Actions({ media }: { media: Media }) {
                   <span className="text-xs text-muted">{sub.name}</span>
                   {sub.auto ? <span className="num text-[11px] text-muted">auto</span> : null}
                 </div>
-                <a href={apiPath(`/api/sub/${sub.token}`)} className="row-link text-sm">
+                <a href={`/api/sub/${sub.token}`} className="row-link text-sm">
                   {sub.ext}
                 </a>
               </div>
@@ -109,11 +109,11 @@ export function Actions({ media }: { media: Media }) {
           <div className="flex flex-wrap items-start gap-6 border-t border-rule pt-5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={apiPath(`/api/thumb/${media.thumbnail}`)}
+              src={`/api/thumb/${media.thumbnail}`}
               alt="Cover art"
               className="max-h-64 border border-rule object-contain"
             />
-            <a href={apiPath(`/api/thumb/${media.thumbnail}`)} download className="btn">
+            <a href={`/api/thumb/${media.thumbnail}`} download className="btn">
               Save cover
               <ArrowDown size={15} weight="bold" />
             </a>
