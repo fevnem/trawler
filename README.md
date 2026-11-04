@@ -15,7 +15,7 @@ after a request ends.
 # api
 cd api
 uv venv --python 3.12 .venv
-uv pip install --python .venv/bin/python fastapi "uvicorn[standard]" yt-dlp httpx pydantic-settings
+uv pip install --python .venv/bin/python fastapi "uvicorn[standard]" yt-dlp httpx pydantic-settings mcp
 PYTHONPATH=src .venv/bin/python -m uvicorn trawler.main:app --port 8010
 
 # web
@@ -40,6 +40,24 @@ the defaults here are 8010 and 3100.
 | GET | `/api/gif/{ticket}` | animated GIF, `?start=&end=&width=&fps=` |
 | GET | `/api/thumb/{ticket}` | cover art |
 | GET | `/api/sub/{ticket}` | subtitle file |
+| POST | `/api/mcp` | MCP server, Streamable HTTP, bearer token |
+
+## MCP
+
+The same reader is available to agents at `https://<host>/api/mcp`, mounted on the API and reached
+through the existing `/api` rewrite. Send `Authorization: Bearer $TRAWLER_MCP_TOKEN`.
+
+| Tool | Returns |
+| --- | --- |
+| `probe` | title, site, duration, formats with signed URLs, subtitles |
+| `list_sites` | extractor index, optional query |
+| `match` | which extractor claims a URL |
+| `download_link` | signed URL for one format, optional trim |
+| `audio_link` | signed URL for converted audio |
+| `gif_link` | signed URL for a GIF range |
+| `subtitle_link` | signed URL for a caption track |
+
+Tools return links, never bytes. Set `TRAWLER_MCP_TOKEN` to empty to disable the mount entirely.
 
 ## Design constraints
 
@@ -65,8 +83,8 @@ Coolify, **Docker Compose** build pack, compose location `/compose.coolify.yml`.
 wrong pack here: it builds one service from source, and ffmpeg would depend on it guessing a system
 package.
 
-Set `TRAWLER_SECRET` and `TRAWLER_PUBLIC_ORIGIN` in the service environment, then add two domains on
-the same hostname:
+Set `TRAWLER_SECRET`, `TRAWLER_PUBLIC_ORIGIN` and `TRAWLER_MCP_TOKEN` in the service environment,
+then add two domains on the same hostname:
 
 | Domain | Service | Port | Path |
 | --- | --- | --- | --- |

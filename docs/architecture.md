@@ -59,6 +59,32 @@ command fails before headers are sent.
 If the first chunk never arrives, the route returns `502` with ffmpeg's last stderr line instead of
 an empty `200`. That distinction is what keeps failures debuggable.
 
+## MCP
+
+`/api/mcp` is a Streamable HTTP MCP server mounted on the same FastAPI app, so it inherits the same
+`/api` rewrite the browser uses and needs no extra routing.
+
+```
+client ──POST /api/mcp──▶ BearerGuard ──▶ MCPServer (stateless, JSON response)
+                                              │
+                                              └─ tools call the same core.ytdlp functions
+                                                 and return absolute signed URLs
+```
+
+Three details worth knowing before changing it:
+
+- **Mount point.** The app is mounted at `/api` with the inner route at `/mcp`. Mounting at
+  `/api/mcp` with an inner route of `/` makes Starlette emit a 307 to the trailing slash, and MCP
+  clients do not reliably follow redirects on POST.
+- **Lifespan.** `StreamableHTTPSessionManager` only exists after `streamable_http_app()` is called,
+  and its task group must be started from the host app's lifespan. `mcp_lifespan()` does that;
+  dropping it produces "Task group is not initialized" on the first request.
+- **Auth.** `BearerGuard` wraps the mount and rejects anything without `TRAWLER_MCP_TOKEN`. When the
+  token is empty the mount is not created at all, so there is no unauthenticated path.
+
+Tools never move bytes. `probe` and the link tools mint tickets through `core.tickets` and return
+absolute URLs built from `TRAWLER_PUBLIC_ORIGIN`; the client fetches those over plain HTTP.
+
 ## Deliberate omissions
 
 - No auth, no accounts, no history.
