@@ -121,7 +121,7 @@ const CAPABILITIES = [
 
 function Capabilities() {
   return (
-    <div className="mt-auto border-t border-rule pt-2 sm:grid sm:grid-cols-2 sm:gap-8 sm:pt-8 xl:grid-cols-4">
+    <div className="mt-16 border-t border-rule pt-6 sm:mt-auto sm:grid sm:grid-cols-2 sm:gap-8 sm:pt-8 xl:grid-cols-4">
       {CAPABILITIES.map((item) => (
         <div
           key={item.title}
