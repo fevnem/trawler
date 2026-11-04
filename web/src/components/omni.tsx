@@ -40,9 +40,7 @@ export function Omni({ value, onChange, onSubmit, busy, compact }: Props) {
         }
         onSubmit();
       }}
-      className={`flex items-stretch border border-line bg-card transition-colors duration-200 focus-within:border-signal ${
-        compact ? "h-14" : "h-[4.5rem]"
-      }`}
+      className={`flex items-stretch border border-line bg-card transition-colors duration-200 focus-within:border-signal h-14`}
     >
       <div className="flex min-w-0 flex-1 items-center gap-3 px-4">
         <LinkSimple size={compact ? 17 : 20} weight="bold" className="shrink-0 text-muted" />
@@ -55,7 +53,7 @@ export function Omni({ value, onChange, onSubmit, busy, compact }: Props) {
           autoComplete="off"
           inputMode="url"
           aria-label="Link to download"
-          className={`field ${compact ? "text-base" : ""}`}
+          className={`field ${compact ? "text-base" : "text-xl"}`}
         />
         {checked && value ? (
           <span className="num hidden shrink-0 text-xs text-muted sm:block">
@@ -66,7 +64,7 @@ export function Omni({ value, onChange, onSubmit, busy, compact }: Props) {
 
       <button
         type="submit"
-        className={`btn shrink-0 border-l border-line ${compact ? "w-24 text-sm" : "w-[7.5rem]"}`}
+        className={`btn h-full shrink-0 border-l border-line ${compact ? "w-24 text-sm" : "w-[7.5rem]"}`}
       >
         {busy ? "Reading" : "Fetch"}
       </button>
