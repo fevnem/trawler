@@ -130,11 +130,14 @@ const CAPABILITIES = [
 
 function Capabilities() {
   return (
-    <div className="mt-auto grid gap-8 border-t border-rule pt-8 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mt-auto border-t border-rule pt-2 sm:grid sm:grid-cols-2 sm:gap-8 sm:pt-8 xl:grid-cols-4">
       {CAPABILITIES.map((item) => (
-        <div key={item.title}>
-          <p className="text-sm">{item.title}</p>
-          <p className="mt-1.5 max-w-[34ch] text-xs leading-relaxed text-muted">{item.body}</p>
+        <div
+          key={item.title}
+          className="flex items-baseline gap-4 border-b border-rule py-3 last:border-0 sm:block sm:border-0 sm:py-0"
+        >
+          <p className="w-28 shrink-0 text-sm sm:w-auto">{item.title}</p>
+          <p className="text-xs leading-relaxed text-muted sm:mt-1.5 sm:max-w-[34ch]">{item.body}</p>
         </div>
       ))}
     </div>
@@ -143,7 +146,7 @@ function Capabilities() {
 
 function SiteBand({ sites, total }: { sites: Site[]; total: number }) {
   return (
-    <div className="mt-10 grid gap-x-10 border-t border-rule sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+    <div className="mt-10 grid grid-cols-2 gap-x-6 border-t border-rule sm:grid-cols-3 sm:gap-x-10 lg:grid-cols-4 xl:grid-cols-6">
       {sites.map((site) => (
         <div key={site.name} className="flex items-baseline justify-between gap-3 border-b border-rule py-2">
           <span className="num truncate text-xs lowercase text-muted">{site.name}</span>
