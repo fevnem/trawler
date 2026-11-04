@@ -1,3 +1,16 @@
+# Coolify Service definition.
+#
+# Build pack: Docker Compose. Compose location: /compose.coolify.yml
+#
+# Domains are configured in the Coolify UI, not here. Add two entries on the
+# same hostname so the proxy routes by path:
+#
+#   https://<host>   -> service web, port 3000, path /
+#   https://<host>   -> service api, port 8000, path /api
+#
+# Do not add Traefik labels to this file. Coolify writes its own on deploy and
+# duplicates make the router ambiguous.
+
 services:
   api:
     build: ./api
@@ -11,13 +24,6 @@ services:
       TAWLER_COOKIES_FILE: ${TAWLER_COOKIES_FILE:-}
     expose:
       - "8000"
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.tawler-api.rule=Host(`${TAWLER_HOST}`) && PathPrefix(`/api`)
-      - traefik.http.routers.tawler-api.priority=20
-      - traefik.http.routers.tawler-api.entrypoints=https
-      - traefik.http.routers.tawler-api.tls.certresolver=letsencrypt
-      - traefik.http.services.tawler-api.loadbalancer.server.port=8000
 
   web:
     build:
@@ -29,10 +35,3 @@ services:
       API_ORIGIN: http://api:8000
     expose:
       - "3000"
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.tawler-web.rule=Host(`${TAWLER_HOST}`)
-      - traefik.http.routers.tawler-web.priority=10
-      - traefik.http.routers.tawler-web.entrypoints=https
-      - traefik.http.routers.tawler-web.tls.certresolver=letsencrypt
-      - traefik.http.services.tawler-web.loadbalancer.server.port=3000

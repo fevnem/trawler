@@ -61,10 +61,21 @@ is a yt-dlp and IP reputation matter, not a bug in this code.
 
 ## Deploy
 
-`compose.coolify.yml` builds both images and routes `/api` to the API with a higher Traefik
-priority than the web app. Copy `.env.example` to `.env`, set `TAWLER_SECRET`, `TAWLER_HOST` and
-`TAWLER_PUBLIC_ORIGIN`, then deploy the stack as one Coolify resource so both containers share a
-network.
+Coolify, **Docker Compose** build pack, compose location `/compose.coolify.yml`. Railpack is the
+wrong pack here: it builds one service from source, and ffmpeg would depend on it guessing a system
+package.
+
+Set `TAWLER_SECRET` and `TAWLER_PUBLIC_ORIGIN` in the service environment, then add two domains on
+the same hostname:
+
+| Domain | Service | Port | Path |
+| --- | --- | --- | --- |
+| `https://<host>` | web | 3000 | `/` |
+| `https://<host>` | api | 8000 | `/api` |
+
+Both containers share the Compose network, so the web app reaches the API at `http://api:8000`. Do
+not add Traefik labels to the compose file: Coolify generates them from the domain table, and
+duplicates make the router ambiguous.
 
 ## Legal
 
