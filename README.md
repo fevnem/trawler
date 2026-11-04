@@ -77,6 +77,15 @@ Both containers share the Compose network, so the web app reaches the API at `ht
 not add Traefik labels to the compose file: Coolify generates them from the domain table, and
 duplicates make the router ambiguous.
 
+### Mounted under a path
+
+If the app is served from a path rather than a hostname (`https://host/tawler`), set
+`NEXT_PUBLIC_BASE_PATH=/tawler` **before building**. It is compiled into the client bundle, so
+changing it requires a redeploy, not a restart. Assets and the `/api` proxy both follow the prefix
+because the proxy is an app route (`web/src/app/api/[...path]/route.ts`), not a rewrite: Next 16
+prefixes rewrite sources with `basePath` but matches them after stripping it, so rewrites 404 under
+a subpath.
+
 ## Legal
 
 The tool is a pipe. What passes through it is the operator's and the user's responsibility.

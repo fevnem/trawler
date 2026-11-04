@@ -45,8 +45,14 @@ export type Playlist = {
 
 export type Probe = Media | Playlist;
 
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+export function apiPath(path: string): string {
+  return `${BASE_PATH}${path}`;
+}
+
 export async function probe(url: string): Promise<Probe> {
-  const response = await fetch("/api/probe", {
+  const response = await fetch(apiPath("/api/probe"), {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ url }),
@@ -61,7 +67,7 @@ export async function probe(url: string): Promise<Probe> {
 export async function matchSite(url: string): Promise<string | null> {
   if (!/^https?:\/\/.+\..+/.test(url)) return null;
   try {
-    const response = await fetch(`/api/match?url=${encodeURIComponent(url)}`);
+    const response = await fetch(apiPath(`/api/match?url=${encodeURIComponent(url)}`));
     if (!response.ok) return null;
     const payload = (await response.json()) as { name: string | null };
     return payload.name;

@@ -30,6 +30,7 @@ services:
       context: ./web
       args:
         API_ORIGIN: http://api:8000
+        NEXT_PUBLIC_BASE_PATH: ${NEXT_PUBLIC_BASE_PATH:-}
     restart: unless-stopped
     environment:
       API_ORIGIN: http://api:8000

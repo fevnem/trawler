@@ -53,9 +53,15 @@ export function Tawler({ total, board }: { total: number; board: Site[] }) {
               Take the file.
             </h1>
             <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-muted">
-              Video, audio, GIF or a trimmed clip, pulled from{" "}
-              <span className="num text-ink">{total.toLocaleString("en-US")}</span> sites. Nothing is
-              kept on the server.
+              {total > 0 ? (
+                <>
+                  Video, audio, GIF or a trimmed clip, pulled from{" "}
+                  <span className="num text-ink">{total.toLocaleString("en-US")}</span> sites. Nothing
+                  is kept on the server.
+                </>
+              ) : (
+                <>Video, audio, GIF or a trimmed clip from every site the reader knows. Nothing is kept on the server.</>
+              )}
             </p>
           </>
         ) : null}

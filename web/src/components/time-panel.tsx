@@ -2,7 +2,7 @@
 
 import { ArrowDown } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
-import { duration } from "@/lib/api";
+import { apiPath, duration } from "@/lib/api";
 
 type Props = {
   token: string;
@@ -25,9 +25,9 @@ export function TimePanel({ token, mode, duration: total }: Props) {
     const from = clamp(start, 0, Math.max(end - 0.2, 0));
     const to = clamp(end, from + 0.2, max);
     if (mode === "gif") {
-      return `/api/gif/${token}?start=${from}&end=${to}&width=${width}&fps=${fps}`;
+      return apiPath(`/api/gif/${token}?start=${from}&end=${to}&width=${width}&fps=${fps}`);
     }
-    return `/api/dl/${token}?start=${from}&end=${to}`;
+    return apiPath(`/api/dl/${token}?start=${from}&end=${to}`);
   }, [token, mode, start, end, width, fps, max]);
 
   const span = Math.max(end - start, 0);

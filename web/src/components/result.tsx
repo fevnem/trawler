@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowDown, ArrowUpRight } from "@phosphor-icons/react";
-import { duration, type Media } from "@/lib/api";
+import { apiPath, duration, type Media } from "@/lib/api";
 import { Actions, bestFormat } from "./actions";
 import { Preview } from "./preview";
 
@@ -37,7 +37,7 @@ export function Result({ media }: { media: Media }) {
         ) : null}
 
         {best ? (
-          <a href={`/api/dl/${best.token}`} className="btn mt-8 w-full">
+          <a href={apiPath(`/api/dl/${best.token}`)} className="btn mt-8 w-full">
             Download {best.label}
             <ArrowDown size={16} weight="bold" />
           </a>
