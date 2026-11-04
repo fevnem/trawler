@@ -152,11 +152,11 @@ function SiteBand({ sites, total }: { sites: Site[]; total: number }) {
           key={site.name}
           className="flex items-baseline border-b border-rule py-2 pr-6 sm:pr-8"
         >
-          <span className="num truncate text-xs lowercase text-muted">{site.name}</span>
+          <span className="truncate text-xs lowercase text-muted">{site.name}</span>
         </div>
       ))}
       <div className="flex items-baseline border-b border-rule py-2">
-        <Link href="/supported-sites" className="num text-xs text-signal">
+        <Link href="/supported-sites" className="text-xs text-signal">
           +{Math.max(total - sites.length, 0).toLocaleString("en-US")} more
         </Link>
       </div>
