@@ -150,13 +150,13 @@ function SiteBand({ sites, total }: { sites: Site[]; total: number }) {
       {sites.map((site) => (
         <div
           key={site.name}
-          className="flex items-baseline border-b border-rule py-2 pr-6 sm:pr-8"
+          className="flex items-baseline border-b border-rule py-1.5 pr-6 sm:pr-8"
         >
-          <span className="truncate text-xs lowercase text-muted">{site.name}</span>
+          <span className="truncate text-[11px] lowercase text-muted">{site.name}</span>
         </div>
       ))}
-      <div className="flex items-baseline border-b border-rule py-2">
-        <Link href="/supported-sites" className="text-xs text-signal">
+      <div className="flex items-baseline border-b border-rule py-1.5">
+        <Link href="/supported-sites" className="text-[11px] text-signal">
           +{Math.max(total - sites.length, 0).toLocaleString("en-US")} more
         </Link>
       </div>
