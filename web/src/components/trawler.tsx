@@ -48,7 +48,7 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
 
   return (
     <div className="flex flex-1 flex-col">
-      <section className={filled ? "pt-8" : "flex flex-1 flex-col justify-center pb-10"}>
+      <section className={filled ? "pt-8" : "flex flex-1 flex-col pb-10 pt-14 sm:pt-20"}>
         <div
           className={
             filled ? "" : "flex w-full flex-col gap-12 lg:flex-row lg:items-end lg:justify-between lg:gap-20"
@@ -105,6 +105,8 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
 
         {!filled && board.length ? <Board sites={board} total={total} /> : null}
         </div>
+
+        {!filled ? <Capabilities /> : null}
       </section>
 
       <div className={`h-px w-full overflow-hidden bg-rule ${busy ? "" : "opacity-0"}`}>
@@ -113,6 +115,25 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
 
       {data?.kind === "media" ? <Result media={data} /> : null}
       {data?.kind === "playlist" ? <PlaylistView data={data} onPick={run} /> : null}
+    </div>
+  );
+}
+
+const CAPABILITIES = [
+  { title: "Video", body: "Every resolution the source offers, in mp4 or webm." },
+  { title: "Audio", body: "The track alone, converted to mp3, m4a, opus, wav or flac." },
+  { title: "GIF and clips", body: "Pick a range and export it as a GIF or a cut file." },
+];
+
+function Capabilities() {
+  return (
+    <div className="mt-auto grid gap-6 border-t border-rule pt-6 sm:grid-cols-3 sm:gap-10">
+      {CAPABILITIES.map((item) => (
+        <div key={item.title}>
+          <p className="text-sm">{item.title}</p>
+          <p className="mt-1 max-w-[32ch] text-xs leading-relaxed text-muted">{item.body}</p>
+        </div>
+      ))}
     </div>
   );
 }
@@ -150,7 +171,7 @@ function PlaylistView({ data, onPick }: { data: Playlist; onPick: (url: string) 
             key={`${entry.id}-${index}`}
             type="button"
             onClick={() => onPick(entry.url)}
-            className="flex w-full items-center gap-4 border-b border-rule py-3 text-left transition-colors hover:bg-[#efeee7]"
+            className="flex w-full items-center gap-4 border-b border-rule py-3 text-left transition-colors hover:bg-hover"
           >
             <span className="num w-8 shrink-0 text-xs text-muted">{String(index + 1).padStart(2, "0")}</span>
             <span className="flex-1 truncate text-sm">{entry.title}</span>

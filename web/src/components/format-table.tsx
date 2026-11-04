@@ -23,7 +23,7 @@ export function FormatTable({ formats, empty }: Props) {
       {formats.map((format) => (
         <div
           key={format.id}
-          className="group grid grid-cols-[1fr_auto] items-center gap-4 border-b border-rule py-3 transition-colors duration-150 hover:bg-[#efeee7] sm:grid-cols-[4.5rem_4.5rem_1fr_5.5rem_6rem]"
+          className="group grid grid-cols-[1fr_auto] items-center gap-4 border-b border-rule py-3 transition-colors duration-150 hover:bg-hover sm:grid-cols-[4.5rem_4.5rem_1fr_5.5rem_6rem]"
         >
           <span className="num text-sm">{quality(format)}</span>
 

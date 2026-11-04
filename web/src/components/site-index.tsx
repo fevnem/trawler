@@ -19,7 +19,7 @@ export function SiteIndex({ sites }: { sites: Site[] }) {
 
   return (
     <div className="pb-24">
-      <div className="mt-10 flex items-center gap-3 border border-ink bg-card px-4">
+      <div className="mt-10 flex items-center gap-3 border border-line bg-card px-4">
         <input
           value={query}
           onChange={(event) => {

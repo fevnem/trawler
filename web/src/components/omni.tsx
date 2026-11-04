@@ -40,7 +40,7 @@ export function Omni({ value, onChange, onSubmit, busy, compact }: Props) {
         }
         onSubmit();
       }}
-      className={`flex items-stretch border border-ink bg-card transition-colors duration-200 focus-within:border-signal ${
+      className={`flex items-stretch border border-line bg-card transition-colors duration-200 focus-within:border-signal ${
         compact ? "h-14" : "h-[4.5rem]"
       }`}
     >
@@ -66,7 +66,7 @@ export function Omni({ value, onChange, onSubmit, busy, compact }: Props) {
 
       <button
         type="submit"
-        className={`btn shrink-0 border-l border-ink ${compact ? "w-24 text-sm" : "w-[7.5rem]"}`}
+        className={`btn shrink-0 border-l border-line ${compact ? "w-24 text-sm" : "w-[7.5rem]"}`}
       >
         {busy ? "Reading" : "Fetch"}
       </button>

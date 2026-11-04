@@ -10,12 +10,18 @@ colour, zero radius, tabular numerals.
 
 | Token | Value | Use |
 | --- | --- | --- |
-| paper | `#F4F3EF` | page |
-| card | `#FBFAF7` | fields, panels |
-| ink | `#131311` | text, borders |
-| rule | `#DCDAD2` | hairlines |
-| muted | `#6B6B63` | secondary text |
-| signal | `#002FA7` | primary action, active tab, focus ring |
+| paper | `#0F0F0D` | page |
+| card | `#171714` | fields, panels |
+| ink | `#F2F1EC` | text |
+| rule | `#2B2B27` | hairlines |
+| line | `#3C3C35` | field and control borders |
+| hover | `#1C1C18` | row hover |
+| muted | `#9C9B91` | secondary text |
+| signal | `#6B8AFD` | primary action, active tab, focus ring |
+
+Dark is the default and the only theme: `color-scheme: dark` is declared so a browser with forced
+dark mode does not invert the palette. The accent carries near-black label text rather than white,
+because white on this blue lands at 3.3:1 while near-black lands above 7:1.
 
 One accent. It never appears as decoration, only as state or action: the Fetch block, the active
 tab, the progress line, the focus ring, the wordmark period.

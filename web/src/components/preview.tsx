@@ -28,7 +28,7 @@ export function Preview({ media }: { media: Media }) {
 
   if (isVideo) {
     return (
-      <div className="relative w-full border border-rule bg-ink">
+      <div className="relative w-full border border-rule bg-void">
         <video
           key={src}
           src={src}
