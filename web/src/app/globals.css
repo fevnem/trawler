@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #0f0f0d;
-  --color-card: #171714;
-  --color-ink: #f2f1ec;
-  --color-rule: #34342e;
-  --color-line: #46463e;
-  --color-muted: #9c9b91;
-  --color-signal: #6b8afd;
-  --color-hover: #1c1c18;
+  --color-paper: #1e1c15;
+  --color-card: #1a1811;
+  --color-ink: #dddad5;
+  --color-rule: #38352c;
+  --color-line: #867c6e;
+  --color-muted: #9e958c;
+  --color-signal: #7fa6e8;
+  --color-action: #002686;
+  --color-hover: #262319;
   --color-void: #000000;
 
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
@@ -33,7 +34,7 @@
 
   ::selection {
     background: var(--color-signal);
-    color: #0c0c0a;
+    color: var(--color-paper);
   }
 
   :focus-visible {
@@ -49,7 +50,7 @@
   }
 
   input::placeholder {
-    color: #6f6e66;
+    color: #7d7466;
   }
 
   option {
@@ -90,15 +91,15 @@
     gap: 0.5rem;
     height: 2.75rem;
     padding: 0 1.25rem;
-    background: var(--color-signal);
-    color: #0c0c0a;
-    font-weight: 600;
+    background: var(--color-action);
+    color: var(--color-ink);
+    font-weight: 500;
     white-space: nowrap;
     transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background 120ms linear;
   }
 
   .btn:hover {
-    background: #8ba4ff;
+    background: #0033a8;
   }
 
   .btn:active {
@@ -161,7 +162,7 @@
   }
 
   .row-link:hover {
-    color: #a7b9ff;
+    color: #a9c6f5;
   }
 
   .progress-bar {

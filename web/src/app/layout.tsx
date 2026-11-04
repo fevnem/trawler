@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${archivo.variable} ${mono.variable}`}>
       <body className="min-h-[100dvh]">
-        <div className="mx-auto flex min-h-[100dvh] w-full max-w-[1400px] flex-col px-5 sm:px-8">
+        <div className="flex min-h-[100dvh] w-full flex-col px-6 sm:px-10 xl:px-16">
           <SiteHeader />
           <div className="flex flex-1 flex-col">{children}</div>
           <SiteFooter />

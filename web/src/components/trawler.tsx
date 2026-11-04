@@ -48,16 +48,17 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
 
   return (
     <div className="flex flex-1 flex-col">
-      <section className={filled ? "pt-8" : "flex flex-1 flex-col pb-10 pt-14 sm:pt-20"}>
+      <section className={filled ? "pt-8" : "flex flex-1 flex-col pb-10 pt-10"}>
+        <div className={filled ? "" : "flex flex-1 items-center"}>
         <div
           className={
-            filled ? "" : "flex w-full flex-col gap-12 lg:flex-row lg:items-end lg:justify-between lg:gap-20"
+            filled ? "" : "flex w-full flex-col gap-12 lg:flex-row lg:items-center lg:justify-between lg:gap-24"
           }
         >
-        <div className={filled ? "" : "w-full max-w-[820px]"}>
+        <div className={filled ? "" : "w-full max-w-[860px]"}>
         {!filled ? (
           <>
-            <h1 className="display max-w-[24ch] text-[clamp(1.9rem,3.6vw,2.85rem)]">
+            <h1 className="display max-w-[24ch] text-[clamp(2.2rem,3.4vw,3.5rem)]">
               Paste a link.
               <br />
               Take the file.
@@ -103,9 +104,10 @@ export function Trawler({ total, board }: { total: number; board: Site[] }) {
         ) : null}
         </div>
 
-        {!filled && board.length ? <Board sites={board} total={total} /> : null}
+        </div>
         </div>
 
+        {!filled && board.length ? <SiteBand sites={board} total={total} /> : null}
         {!filled ? <Capabilities /> : null}
       </section>
 
@@ -123,34 +125,32 @@ const CAPABILITIES = [
   { title: "Video", body: "Every resolution the source offers, in mp4 or webm." },
   { title: "Audio", body: "The track alone, converted to mp3, m4a, opus, wav or flac." },
   { title: "GIF and clips", body: "Pick a range and export it as a GIF or a cut file." },
+  { title: "Subtitles and covers", body: "Every caption track and the artwork, as separate files." },
 ];
 
 function Capabilities() {
   return (
-    <div className="mt-auto grid gap-6 border-t border-rule pt-6 sm:grid-cols-3 sm:gap-10">
+    <div className="mt-auto grid gap-8 border-t border-rule pt-8 sm:grid-cols-2 xl:grid-cols-4">
       {CAPABILITIES.map((item) => (
         <div key={item.title}>
           <p className="text-sm">{item.title}</p>
-          <p className="mt-1 max-w-[32ch] text-xs leading-relaxed text-muted">{item.body}</p>
+          <p className="mt-1.5 max-w-[34ch] text-xs leading-relaxed text-muted">{item.body}</p>
         </div>
       ))}
     </div>
   );
 }
 
-function Board({ sites, total }: { sites: Site[]; total: number }) {
+function SiteBand({ sites, total }: { sites: Site[]; total: number }) {
   return (
-    <div className="hidden w-[260px] shrink-0 lg:block">
-      <div className="border-t border-rule pt-2">
-        {sites.map((site) => (
-          <div key={site.name} className="flex items-baseline justify-between gap-3 py-1.5">
-            <span className="num text-[11px] lowercase text-muted">{site.name}</span>
-          </div>
-        ))}
-        <Link
-          href="/supported-sites"
-          className="num mt-2 block border-t border-rule pt-2 text-[11px] text-signal"
-        >
+    <div className="mt-10 grid gap-x-10 border-t border-rule sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+      {sites.map((site) => (
+        <div key={site.name} className="flex items-baseline justify-between gap-3 border-b border-rule py-2">
+          <span className="num truncate text-xs lowercase text-muted">{site.name}</span>
+        </div>
+      ))}
+      <div className="flex items-baseline border-b border-rule py-2">
+        <Link href="/supported-sites" className="num text-xs text-signal">
           +{Math.max(total - sites.length, 0).toLocaleString("en-US")} more
         </Link>
       </div>

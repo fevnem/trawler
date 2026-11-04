@@ -17,7 +17,8 @@ async function load() {
     const picked = FEATURED.map((name) => all.find((site) => site.name.toLowerCase() === name)).filter(
       (site): site is Site => Boolean(site),
     );
-    const board = picked.length >= 4 ? picked : all.slice(0, 8);
+    const rest = all.filter((site) => !picked.some((p) => p.name === site.name));
+    const board = [...picked, ...rest].slice(0, 23);
     return { total, board };
   } catch {
     return { total: 0, board: [] as Site[] };

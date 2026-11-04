@@ -35,7 +35,7 @@ export function SiteIndex({ sites }: { sites: Site[] }) {
         </span>
       </div>
 
-      <div className="mt-8 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {shown.map((site) => (
           <div
             key={site.name}
