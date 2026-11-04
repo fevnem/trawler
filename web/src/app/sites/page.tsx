@@ -4,6 +4,8 @@ import type { Site } from "@/lib/api";
 
 const ORIGIN = process.env.API_ORIGIN ?? "http://127.0.0.1:8010";
 
+export const dynamic = "force-dynamic";
+
 async function loadSites(): Promise<Site[]> {
   try {
     const response = await fetch(`${ORIGIN}/api/sites`, { next: { revalidate: 3600 } });
