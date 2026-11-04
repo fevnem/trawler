@@ -146,9 +146,12 @@ function Capabilities() {
 
 function SiteBand({ sites, total }: { sites: Site[]; total: number }) {
   return (
-    <div className="mt-10 grid grid-cols-2 gap-x-6 border-t border-rule sm:grid-cols-3 sm:gap-x-10 lg:grid-cols-4 xl:grid-cols-6">
+    <div className="mt-10 grid grid-cols-2 border-t border-rule sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
       {sites.map((site) => (
-        <div key={site.name} className="flex items-baseline justify-between gap-3 border-b border-rule py-2">
+        <div
+          key={site.name}
+          className="flex items-baseline border-b border-rule py-2 pr-6 sm:pr-8"
+        >
           <span className="num truncate text-xs lowercase text-muted">{site.name}</span>
         </div>
       ))}
