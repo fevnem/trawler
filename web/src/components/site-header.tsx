@@ -27,6 +27,14 @@ export function SiteHeader() {
 
       <nav className="flex items-center gap-6 text-sm">
         <Link
+          href="/mcp"
+          className={`transition-colors hover:text-ink ${
+            pathname === "/mcp" ? "text-ink" : "text-muted"
+          }`}
+        >
+          MCP
+        </Link>
+        <Link
           href="/supported-sites"
           className={`transition-colors hover:text-ink ${
             pathname === "/supported-sites" ? "text-ink" : "text-muted"

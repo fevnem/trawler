@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     max_downloads: int = 4
     max_probes: int = 8
     cors_origins: str = "http://localhost:3000"
+    public_origin: str = "http://localhost:3000"
+    mcp_token: str = ""
     cookies_file: str = ""
     user_agent: str = (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
